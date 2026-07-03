@@ -4,25 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>ScienceMD</title>
-  <script>
-    // Embedded 128 × 128 ScienceMD icon (optimised PNG, reused throughout the app).
-    window.SCIENCEMD_ICON_DATA_URI = "data:image/png;base64,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";
-    document.documentElement.style.setProperty(
-      '--science-md-icon',
-      `url("${window.SCIENCEMD_ICON_DATA_URI}")`
-    );
-
-    [
-      { rel: 'icon', type: 'image/png', sizes: '128x128' },
-      { rel: 'shortcut icon', type: 'image/png' },
-      { rel: 'apple-touch-icon', sizes: '128x128' }
-    ].forEach(definition => {
-      const link = document.createElement('link');
-      Object.entries(definition).forEach(([name, value]) => link.setAttribute(name, value));
-      link.href = window.SCIENCEMD_ICON_DATA_URI;
-      document.head.appendChild(link);
-    });
-  </script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20128%20128%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%232563eb%27%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230f766e%27%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20x%3D%278%27%20y%3D%278%27%20width%3D%27112%27%20height%3D%27112%27%20rx%3D%2726%27%20fill%3D%27url%28%23g%29%27%2F%3E%0A%20%20%3Ctext%20x%3D%2731%27%20y%3D%2779%27%20font-size%3D%2758%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27white%27%3ES%3C%2Ftext%3E%0A%20%20%3Cpath%20d%3D%27M76%2034h28M90%2020v28M78%2097c8-11%2018-11%2028%200%27%20stroke%3D%27%23bdebdc%27%20stroke-width%3D%277%27%20stroke-linecap%3D%27round%27%20fill%3D%27none%27%2F%3E%0A%3C%2Fsvg%3E">
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20128%20128%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%232563eb%27%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230f766e%27%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20x%3D%278%27%20y%3D%278%27%20width%3D%27112%27%20height%3D%27112%27%20rx%3D%2726%27%20fill%3D%27url%28%23g%29%27%2F%3E%0A%20%20%3Ctext%20x%3D%2731%27%20y%3D%2779%27%20font-size%3D%2758%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27white%27%3ES%3C%2Ftext%3E%0A%20%20%3Cpath%20d%3D%27M76%2034h28M90%2020v28M78%2097c8-11%2018-11%2028%200%27%20stroke%3D%27%23bdebdc%27%20stroke-width%3D%277%27%20stroke-linecap%3D%27round%27%20fill%3D%27none%27%2F%3E%0A%3C%2Fsvg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20128%20128%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%232563eb%27%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%230f766e%27%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20x%3D%278%27%20y%3D%278%27%20width%3D%27112%27%20height%3D%27112%27%20rx%3D%2726%27%20fill%3D%27url%28%23g%29%27%2F%3E%0A%20%20%3Ctext%20x%3D%2731%27%20y%3D%2779%27%20font-size%3D%2758%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27white%27%3ES%3C%2Ftext%3E%0A%20%20%3Cpath%20d%3D%27M76%2034h28M90%2020v28M78%2097c8-11%2018-11%2028%200%27%20stroke%3D%27%23bdebdc%27%20stroke-width%3D%277%27%20stroke-linecap%3D%27round%27%20fill%3D%27none%27%2F%3E%0A%3C%2Fsvg%3E">
 
   <!--
     ScienceMD — self-contained Markdown + LaTeX-style maths editor
@@ -32,9 +16,10 @@
     Features:
     - Open/import .md files
     - Visual editing with Markdown kept underneath
-    - Render preview with headings, lists, tables, code blocks, images, and maths
+    - WYSIWYG editing with headings, lists, tables, code blocks, images, and maths
     - Supports inline and display LaTeX-style maths
-    - Desktop split view with linked editor/preview scrolling
+    - Full-width single-document workspace on desktop
+    - Hidden print/export renderer with selectable document styles
     - Autosaves drafts to browser storage
     - Download/export edited Markdown, rendered HTML, or print/save as PDF
 
@@ -126,30 +111,6 @@
     }
 
     .top-line > div:first-child {
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-
-    .app-identity {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 0;
-    }
-
-    .app-logo {
-      width: 34px;
-      height: 34px;
-      flex: 0 0 34px;
-      border-radius: 9px;
-      background-image: var(--science-md-icon);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 2px 7px rgba(8, 43, 92, 0.24);
-    }
-
-    .app-title-copy {
       min-width: 0;
       flex: 1 1 auto;
     }
@@ -1274,11 +1235,14 @@
       height: 54px;
       flex: 0 0 auto;
       border-radius: 15px;
-      background-image: var(--science-md-icon);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 3px 10px rgba(8, 43, 92, 0.22);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: white;
+      font-weight: 850;
+      font-size: 1.6rem;
+      letter-spacing: -0.05em;
     }
 
     .creator {
@@ -1427,13 +1391,6 @@
       .top-line {
         align-items: flex-start;
         flex-wrap: wrap;
-      }
-
-      .app-logo {
-        width: 32px;
-        height: 32px;
-        flex-basis: 32px;
-        border-radius: 8px;
       }
 
       .subtitle {
@@ -1875,7 +1832,10 @@
         display: block !important;
       }
 
-      #previewPanel {
+      #previewPanel,
+      #previewPanel.hidden,
+      #previewPanel.hidden-on-mobile,
+      #previewPanel.hidden.hidden-on-mobile {
         display: block !important;
         border: 0 !important;
         box-shadow: none !important;
@@ -2573,15 +2533,9 @@
 
       .top-line > div:first-child {
         display: flex;
-        align-items: center;
-        gap: 9px;
-        min-width: 0;
-      }
-
-      .app-title-copy {
-        display: flex;
         align-items: baseline;
         gap: 12px;
+        min-width: 0;
       }
 
       header h1 {
@@ -3007,17 +2961,156 @@
       }
     }
 
+
+    /* Single-document workspace: the rendered preview now exists only for print/export. */
+    .output-group {
+      align-items: center;
+    }
+
+    .style-select-wrap {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      height: 31px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-right: 0;
+      border-radius: 9px 0 0 9px;
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    .style-select-label {
+      padding-left: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #previewStyle {
+      min-width: 118px;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      padding: 0 8px 0 6px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .output-group #printBtn {
+      width: 38px;
+      min-width: 38px;
+      height: 31px;
+      padding: 0;
+      border-radius: 0 9px 9px 0 !important;
+      border-right-width: 1px !important;
+    }
+
+    @media screen {
+      .tabs,
+      #desktopSplitter {
+        display: none !important;
+      }
+
+      /* Keep a laid-out, off-screen renderer so MathJax and print/export remain reliable. */
+      #previewPanel,
+      #previewPanel.hidden,
+      #previewPanel.hidden-on-mobile,
+      #previewPanel.hidden.hidden-on-mobile {
+        display: block !important;
+        position: fixed !important;
+        left: -100000px !important;
+        top: 0 !important;
+        width: 794px !important;
+        height: auto !important;
+        max-height: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        overflow: hidden !important;
+      }
+
+      .workspace,
+      .workspace.has-desktop-splitter {
+        display: block !important;
+        grid-template-columns: none !important;
+        gap: 0 !important;
+      }
+
+      #editorPanel {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media print {
+      #previewPanel,
+      #previewPanel.hidden,
+      #previewPanel.hidden-on-mobile,
+      #previewPanel.hidden.hidden-on-mobile {
+        display: block !important;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .workspace,
+      .workspace.has-desktop-splitter {
+        max-width: 1500px;
+      }
+
+      .wysiwyg-editor {
+        padding-left: clamp(32px, 5vw, 84px);
+        padding-right: clamp(32px, 5vw, 84px);
+      }
+
+      .output-group .style-select-wrap {
+        height: 34px;
+      }
+
+      .output-group #printBtn {
+        height: 34px !important;
+      }
+
+      #previewStyle {
+        min-width: 136px;
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .style-select-label {
+        display: none;
+      }
+
+      #previewStyle {
+        min-width: 102px;
+        padding-left: 7px;
+        font-size: 0.75rem;
+      }
+
+      .output-group #printBtn {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 29px !important;
+      }
+
+      .style-select-wrap {
+        height: 29px;
+      }
+    }
+
   </style>
 </head>
 <body>
   <header>
     <div class="top-line">
-      <div class="app-identity">
-        <span class="app-logo" role="img" aria-label="ScienceMD icon"></span>
-        <div class="app-title-copy">
-          <h1>ScienceMD</h1>
-          <div id="fileName" class="subtitle">No file loaded — using local draft</div>
-        </div>
+      <div>
+        <h1>ScienceMD</h1>
+        <div id="fileName" class="subtitle">No file loaded — using local draft</div>
       </div>
       <div class="buttons top-toolbar" aria-label="Main actions">
         <div class="tool-group" data-ribbon-label="File" aria-label="File actions">
@@ -3032,6 +3125,19 @@
           <button id="navBtn" type="button" title="Section navigation" aria-label="Section navigation"><svg class="bi bi-list-nested" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5"/></svg></button>
           <button id="mathBtn" type="button" title="Math palette" aria-label="Math palette"><svg class="bi bi-braces" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.965h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6M13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.797c0 1.094-.39 1.538-1.354 1.538h-.273v.965h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.965h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6"/></svg></button>
           <button id="findBtn" type="button" title="Find and replace" aria-label="Find and replace"><svg class="bi bi-search" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg></button>
+        </div>
+
+        <div class="tool-group output-group" data-ribbon-label="Output" aria-label="Document output">
+          <div class="style-select-wrap" title="Document style">
+            <label class="style-select-label" for="previewStyle">Style</label>
+            <select id="previewStyle" aria-label="Document style">
+              <option value="default">Default</option>
+              <option value="physics">Science Paper</option>
+              <option value="times">Times</option>
+              <option value="draft">Clean Draft</option>
+            </select>
+          </div>
+          <button id="printBtn" type="button" title="Print / Save as PDF" aria-label="Print or save as PDF"><svg class="bi bi-printer" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zM3 12v-2h10v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1m11-6a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1V9H3v2H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/></svg></button>
         </div>
 
         <div class="tool-group" data-ribbon-label="View" aria-label="View actions">
@@ -3076,20 +3182,7 @@
         <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />
       </article>
 
-      <article id="previewPanel" class="panel hidden hidden-on-mobile">
-        <div class="panel-head preview-panel-head">
-          <span>Rendered preview</span>
-          <div class="preview-controls">
-            <label for="previewStyle">Style</label>
-            <select id="previewStyle">
-              <option value="default">Default</option>
-              <option value="physics">Science Paper</option>
-              <option value="times">Times</option>
-              <option value="draft">Clean Draft</option>
-            </select>
-            <button id="printBtn" type="button" title="Print / Save as PDF" aria-label="Print or save as PDF"><svg class="bi bi-printer" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zM3 12v-2h10v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1m11-6a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1V9H3v2H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/></svg></button>
-          </div>
-        </div>
+      <article id="previewPanel" class="internal-renderer" aria-hidden="true">
         <div id="preview" class="preview"></div>
       </article>
     </section>
@@ -3208,7 +3301,7 @@
 
     <div class="help-panel">
       <section class="about-card">
-        <div class="about-icon" role="img" aria-label="ScienceMD icon"></div>
+        <div class="about-icon">S</div>
         <div>
           <h2>ScienceMD</h2>
           <p>Offline Markdown, maths, and science-paper editor.</p>
@@ -3222,9 +3315,9 @@
           <li>Use <strong>New</strong> to start from the built-in ScienceMD starter document.</li>
           <li>Use <strong>Open</strong> to load a <code>.md</code> file.</li>
           <li>Write in the visual editor, or switch to <strong>MD</strong> for exact Markdown source editing.</li>
-          <li>Check maths, tables, images, and layout in <strong>Preview</strong>.</li>
+          <li>Choose a document style from the <strong>Output</strong> group.</li>
           <li>Use <strong>Save</strong> or <strong>Save As</strong> to download your Markdown.</li>
-          <li>Use <strong>Print</strong> in Preview to print or save as PDF.</li>
+          <li>Use <strong>Print</strong> in the Output group to print or save as PDF.</li>
         </ol>
       </section>
 
@@ -3278,7 +3371,7 @@ F = G\frac{m_1m_2}{r^2}
 
       <section>
         <h3>Desktop layout</h3>
-        <p>On desktop-sized screens, ScienceMD shows the visual editor and rendered preview side by side. The panes use linked scrolling so that moving one keeps the other aligned.</p>
+        <p>ScienceMD uses a full-width visual editor. A hidden renderer prepares styled print, PDF, and HTML output without taking up document workspace.</p>
         <p>The word count and character count are shown in the bottom footer status bar.</p>
       </section>
 
@@ -3382,7 +3475,7 @@ F = G\frac{m_1m_2}{r^2}
     let savedWysiwygRange = null;
     let activeMathEditInput = null;
 
-    const starterText = "# Welcome to ScienceMD\n\n**ScienceMD** is an offline Markdown and LaTeX writing editor for science notes, revision sheets, technical documents, and print-ready papers.\n\nIt keeps the Markdown as the master file while giving you three practical views:\n\n- **Write** \u2014 visual editing for normal writing.\n- **MD** \u2014 direct Markdown source editing when you need exact control.\n- **Preview** \u2014 rendered layout for checking maths, tables, images, and print output.\n\nOn desktop, the visual editor and rendered preview sit side by side and scroll together. On phone or tablet, the same file still works as a compact mobile editor.\n\n---\n\n## 1. Start writing\n\nUse headings to structure your document:\n\n```markdown\n# Main title\n## Section heading\n### Subsection\n```\n\nThe section navigation button builds a document outline from your headings, which is useful for long papers or revision notes.\n\n---\n\n## 2. Maths support\n\nScienceMD supports LaTeX-style maths.\n\nInline maths uses `\\( ... \\)`:\n\n\\(E = mc^2\\)\n\nDisplay maths uses `\\[ ... \\]`:\n\n\\[\nF = G\\frac{m_1m_2}{r^2}\n\\]\n\nAnother example:\n\n\\[\nR(x) = (1-x)^p, \\qquad x = \\frac{K}{K_{\\mathrm{sat}}}\n\\]\n\nIn the visual editor, rendered maths can be clicked and edited directly. Click **Done** to return the formula to rendered form.\n\n---\n\n## 3. Formatting toolbar\n\nThe editor toolbar gives quick access to:\n\n| Tool | Use |\n|---|---|\n| H1, H2, H3 | headings |\n| Bold / Italic | emphasis |\n| Quote | block quotations |\n| Bullet / numbered list | lists |\n| Inline maths / block maths | LaTeX formulae |\n| Image | embedded images |\n| MD | switch between visual and Markdown source editing |\n| Horizontal rule | section breaks |\n\n---\n\n## 4. Preview and print styles\n\nUse the Preview style selector to change how the rendered document looks.\n\nUseful styles include:\n\n- **Science Paper** \u2014 formal serif layout for science documents.\n- **Default** \u2014 general reading and editing.\n- **Times** \u2014 classic Times New Roman appearance.\n- **Clean Draft** \u2014 spacious draft reading mode.\n\nThe chosen style affects preview and print/PDF output only. It does not alter the Markdown file.\n\n---\n\n## 5. Tables\n\nMarkdown tables are supported:\n\n| Quantity | Meaning | Notes |\n|---|---|---|\n| \\(K\\) | curvature scalar | example symbol |\n| \\(K_{\\mathrm{sat}}\\) | saturation scale | example parameter |\n| \\(x\\) | dimensionless state variable | \\(x = K/K_{\\mathrm{sat}}\\) |\n\n---\n\n## 6. Code blocks\n\nUse triple backticks for code:\n\n```csharp\npublic static double Response(double x, double p)\n{\n    return Math.Pow(1.0 - x, p);\n}\n```\n\n---\n\n## 7. Saving and exporting\n\n- **New** starts a fresh ScienceMD starter document.\n- **Open** loads an existing `.md` file.\n- **Save** downloads the current Markdown file.\n- **Save As** lets you choose a filename or export a self-contained rendered HTML copy.\n- **Print** in Preview opens the browser print dialog, where you can print or save as PDF.\n\nAutosave uses browser storage as a safety net, but it is not a replacement for saving a real file.\n\n---\n\n## 8. Example paragraph\n\nThis is a normal paragraph for testing the visual editor, Markdown source, and rendered preview. On desktop, scroll either the editor or the preview and the other pane should follow.\n";
+    const starterText = "# Welcome to ScienceMD\n\n**ScienceMD** is an offline Markdown and LaTeX writing editor for science notes, revision sheets, technical documents, and print-ready papers.\n\nIt keeps the Markdown as the master file while giving you two practical editing modes:\n\n- **Write** \u2014 visual editing for normal writing.\n- **MD** \u2014 direct Markdown source editing when you need exact control.\n\nThe full-width visual editor shows the formatted document directly. A hidden renderer is used only when printing or exporting, so it does not take up workspace. On phone or tablet, the same file still works as a compact mobile editor.\n\n---\n\n## 1. Start writing\n\nUse headings to structure your document:\n\n```markdown\n# Main title\n## Section heading\n### Subsection\n```\n\nThe section navigation button builds a document outline from your headings, which is useful for long papers or revision notes.\n\n---\n\n## 2. Maths support\n\nScienceMD supports LaTeX-style maths.\n\nInline maths uses `\\( ... \\)`:\n\n\\(E = mc^2\\)\n\nDisplay maths uses `\\[ ... \\]`:\n\n\\[\nF = G\\frac{m_1m_2}{r^2}\n\\]\n\nAnother example:\n\n\\[\nR(x) = (1-x)^p, \\qquad x = \\frac{K}{K_{\\mathrm{sat}}}\n\\]\n\nIn the visual editor, rendered maths can be clicked and edited directly. Click **Done** to return the formula to rendered form.\n\n---\n\n## 3. Formatting toolbar\n\nThe editor toolbar gives quick access to:\n\n| Tool | Use |\n|---|---|\n| H1, H2, H3 | headings |\n| Bold / Italic | emphasis |\n| Quote | block quotations |\n| Bullet / numbered list | lists |\n| Inline maths / block maths | LaTeX formulae |\n| Image | embedded images |\n| MD | switch between visual and Markdown source editing |\n| Horizontal rule | section breaks |\n\n---\n\n## 4. Document and print styles\n\nUse the Style selector in the Output group to change how the visual document and printed output look.\n\nUseful styles include:\n\n- **Science Paper** \u2014 formal serif layout for science documents.\n- **Default** \u2014 general reading and editing.\n- **Times** \u2014 classic Times New Roman appearance.\n- **Clean Draft** \u2014 spacious draft reading mode.\n\nThe chosen style affects the visual editor and print/PDF output. It does not alter the Markdown file.\n\n---\n\n## 5. Tables\n\nMarkdown tables are supported:\n\n| Quantity | Meaning | Notes |\n|---|---|---|\n| \\(K\\) | curvature scalar | example symbol |\n| \\(K_{\\mathrm{sat}}\\) | saturation scale | example parameter |\n| \\(x\\) | dimensionless state variable | \\(x = K/K_{\\mathrm{sat}}\\) |\n\n---\n\n## 6. Code blocks\n\nUse triple backticks for code:\n\n```csharp\npublic static double Response(double x, double p)\n{\n    return Math.Pow(1.0 - x, p);\n}\n```\n\n---\n\n## 7. Saving and exporting\n\n- **New** starts a fresh ScienceMD starter document.\n- **Open** loads an existing `.md` file.\n- **Save** downloads the current Markdown file.\n- **Save As** lets you choose a filename or export a self-contained rendered HTML copy.\n- **Print** in the Output group opens the browser print dialog, where you can print or save as PDF.\n\nAutosave uses browser storage as a safety net, but it is not a replacement for saving a real file.\n\n---\n\n## 8. Example paragraph\n\nThis is a normal paragraph for testing the visual editor, Markdown source, and print-ready document styles.\n";
 
     function showToast(message) {
       clearTimeout(toastTimer);
@@ -3812,11 +3905,11 @@ ${equation}
       return headings;
     }
 
-    function updateNavigation() {
+    function updateNavigation(syncVisual = true) {
       // In WYSIWYG mode the hidden Markdown textarea is not always perfectly current
       // until we explicitly serialise the visual editor. Do that before scanning
       // headings, otherwise the navigator can look empty or jump to stale positions.
-      if (isVisualModeActive()) {
+      if (syncVisual && isVisualModeActive()) {
         const editingMath = wysiwygEditor.querySelector('.editing-math');
         if (!editingMath) syncMarkdownFromWysiwyg();
       }
@@ -5159,8 +5252,8 @@ ${latex}
         }
       } catch (error) {
         console.error('Preview render failed:', error);
-        preview.innerHTML = '<p><strong>Preview could not render this file.</strong></p><p>Switch to Write/MD mode, save a copy, or start a new document.</p>';
-        showToast('Preview could not render this file.');
+        preview.innerHTML = '<p><strong>The print renderer could not prepare this file.</strong></p><p>Save a Markdown copy or start a new document.</p>';
+        showToast('The print renderer could not prepare this file.');
       }
     }
 
@@ -5174,7 +5267,7 @@ ${latex}
       try {
         safeSetStorage(STORAGE_KEY, editor.value || '');
         saveImageMap();
-        updateNavigation();
+        updateNavigation(false);
         if (updateVisual) syncWysiwygFromMarkdown(false);
         scheduleRender();
       } catch (error) {
@@ -5276,69 +5369,27 @@ ${latex}
       return window.matchMedia('(min-width: 900px)').matches;
     }
 
-    function switchView(view) {
-      if (view === 'split') {
-        view = isWideScreen() ? 'split' : 'preview';
+    function switchView(_view) {
+      lastScrollProgress = getScrollProgress(getActiveEditorScroller());
+      currentView = 'edit';
+
+      editTab.classList.add('active');
+      previewTab.classList.remove('active');
+      splitTab.classList.remove('active');
+
+      editorPanel.classList.remove('hidden');
+      previewPanel.classList.add('hidden');
+
+      if (!sourceMode && !wysiwygEditor.classList.contains('hidden') && !wysiwygEditor.innerHTML.trim()) {
+        syncWysiwygFromMarkdown(true);
       }
 
-      lastScrollProgress = getCurrentScrollProgress();
-      currentView = view;
-
-      editTab.classList.toggle('active', view === 'edit');
-      previewTab.classList.toggle('active', view === 'preview');
-      splitTab.classList.toggle('active', view === 'split');
-
-      if (isWideScreen()) {
-        // Wide screens get a real side-by-side vertical split.
-        editorPanel.classList.remove('hidden');
-        previewPanel.classList.remove('hidden');
-        currentView = 'split';
-        renderNow();
-        if (window.MathJax?.startup?.promise) {
-          MathJax.startup.promise.then(() => applyScrollProgress('split', lastScrollProgress));
-        } else {
-          applyScrollProgress('split', lastScrollProgress);
-        }
-      } else {
-        // Phones get one pane at a time: Edit or Preview.
-        editorPanel.classList.toggle('hidden', view === 'preview');
-        previewPanel.classList.toggle('hidden', view === 'edit');
-
-        if (view !== 'edit') {
-          renderNow();
-          if (window.MathJax?.startup?.promise) {
-            MathJax.startup.promise.then(() => applyScrollProgress(view, lastScrollProgress));
-          } else {
-            applyScrollProgress(view, lastScrollProgress);
-          }
-        } else {
-          if (!sourceMode && !wysiwygEditor.classList.contains('hidden') && !wysiwygEditor.innerHTML.trim()) {
-            syncWysiwygFromMarkdown(true);
-          }
-          applyScrollProgress(view, lastScrollProgress);
-        }
-      }
-
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      applyScrollProgress('edit', lastScrollProgress);
     }
 
     function handleResponsiveLayout() {
-      const progress = getCurrentScrollProgress();
-
-      if (isWideScreen()) {
-        editorPanel.classList.remove('hidden');
-        previewPanel.classList.remove('hidden');
-        currentView = 'split';
-        renderNow();
-        applyScrollProgress('split', progress);
-      } else {
-        if (currentView === 'split') {
-          currentView = 'edit';
-        }
-        switchView(currentView === 'preview' ? 'preview' : 'edit');
-      }
+      switchView('edit');
     }
-
 
     function getLineStart(text, index) {
       return text.lastIndexOf('\n', Math.max(0, index - 1)) + 1;
@@ -5534,12 +5585,11 @@ ${latex}
         const committedMath = commitActiveWysiwygMathEdit({ quiet: true });
         if (!committedMath) syncMarkdownFromWysiwyg();
       }
-      const previousView = currentView;
-      const previousProgress = getCurrentScrollProgress();
+
+      const previousProgress = getScrollProgress(getActiveEditorScroller());
       const previousTitle = document.title;
       document.title = getDocumentTitleFromMarkdown();
 
-      switchView('preview');
       renderNow();
 
       try {
@@ -5552,21 +5602,16 @@ ${latex}
 
       applyPrintClasses();
 
-      // Give mobile Chrome time to apply print classes and finish SVG maths layout
-      // before it snapshots the page for the Android print preview.
+      // Allow browsers to apply the print stylesheet and finish SVG maths layout.
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       await new Promise(resolve => setTimeout(resolve, 180));
 
       window.print();
 
-      // Restore editing position after the print dialog closes/returns.
       setTimeout(() => {
         clearPrintClasses();
         document.title = previousTitle;
-        if (!isWideScreen()) {
-          switchView(previousView === 'preview' ? 'preview' : 'edit');
-        }
-        applyScrollProgress(currentView, previousProgress);
+        applyScrollProgress('edit', previousProgress);
       }, 450);
     }
 
@@ -5715,7 +5760,6 @@ ${latex}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(title)}</title>
-<link rel="icon" type="image/png" href="${window.SCIENCEMD_ICON_DATA_URI}">
 ${mathJaxScripts}
 <style>
 ${styleText}
@@ -6031,8 +6075,7 @@ window.addEventListener('load', function () {
   </script>
 
 <script>
-  // Desktop repair layer for ScienceMD.
-  // Adds ribbon labels and a safe desktop splitter without changing the mobile editor.
+  // Preserve explicit ribbon labels in older saved copies of the interface.
   (function () {
     function ready(fn) {
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
@@ -6040,75 +6083,12 @@ window.addEventListener('load', function () {
     }
 
     ready(function () {
-      var groups = Array.from(document.querySelectorAll('.top-toolbar .tool-group'));
-      var labels = ['File', 'Document', 'View'];
-      groups.forEach(function (group, index) {
-        group.setAttribute('data-ribbon-label', labels[index] || 'Tools');
+      var labels = ['File', 'Document', 'Output', 'View'];
+      Array.from(document.querySelectorAll('.top-toolbar .tool-group')).forEach(function (group, index) {
+        if (!group.getAttribute('data-ribbon-label')) {
+          group.setAttribute('data-ribbon-label', labels[index] || 'Tools');
+        }
       });
-
-      var workspace = document.querySelector('.workspace');
-      var editorPanel = document.getElementById('editorPanel');
-      var previewPanel = document.getElementById('previewPanel');
-      if (!workspace || !editorPanel || !previewPanel || document.getElementById('desktopSplitter')) return;
-
-      var splitter = document.createElement('div');
-      splitter.id = 'desktopSplitter';
-      splitter.className = 'desktop-splitter';
-      splitter.setAttribute('role', 'separator');
-      splitter.setAttribute('aria-orientation', 'vertical');
-      splitter.setAttribute('aria-label', 'Resize editor and preview panes');
-      editorPanel.insertAdjacentElement('afterend', splitter);
-      workspace.classList.add('has-desktop-splitter');
-
-      var mq = window.matchMedia('(min-width: 900px)');
-      var dragging = false;
-
-      function applySplit(percent) {
-        var clamped = Math.min(70, Math.max(30, percent || 50));
-        workspace.style.setProperty('--desktop-editor-col', clamped + 'fr');
-        workspace.style.setProperty('--desktop-preview-col', (100 - clamped) + 'fr');
-      }
-
-      function loadSplit() {
-        var value = 50;
-        try {
-          var stored = Number(localStorage.getItem('wysiwygmd_v18_desktop_split_percent'));
-          if (Number.isFinite(stored)) value = stored;
-        } catch (_) {}
-        applySplit(value);
-      }
-
-      function setSplitFromX(clientX) {
-        var rect = workspace.getBoundingClientRect();
-        if (!rect.width) return;
-        var percent = ((clientX - rect.left) / rect.width) * 100;
-        var clamped = Math.min(70, Math.max(30, percent));
-        applySplit(clamped);
-        try { localStorage.setItem('wysiwygmd_v18_desktop_split_percent', String(Math.round(clamped))); } catch (_) {}
-      }
-
-      splitter.addEventListener('pointerdown', function (event) {
-        if (!mq.matches) return;
-        dragging = true;
-        document.body.classList.add('desktop-resizing');
-        splitter.setPointerCapture(event.pointerId);
-        event.preventDefault();
-      });
-
-      splitter.addEventListener('pointermove', function (event) {
-        if (!dragging || !mq.matches) return;
-        setSplitFromX(event.clientX);
-      });
-
-      function stopDrag() {
-        dragging = false;
-        document.body.classList.remove('desktop-resizing');
-      }
-
-      splitter.addEventListener('pointerup', stopDrag);
-      splitter.addEventListener('pointercancel', stopDrag);
-      window.addEventListener('resize', loadSplit);
-      loadSplit();
     });
   })();
 </script>
