@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+def scienceMdVersionCode = (project.findProperty('SCIENCEMD_VERSION_CODE') ?: '3').toInteger()
+def scienceMdVersionName = project.findProperty('SCIENCEMD_VERSION_NAME') ?: '1.2.0'
+def releaseKeystorePath = System.getenv('SCIENCEMD_KEYSTORE_PATH')
+
 android {
     namespace 'uk.co.coolkama.sciencemd'
     compileSdk 35
@@ -10,14 +14,34 @@ android {
         applicationId 'uk.co.coolkama.sciencemd'
         minSdk 24
         targetSdk 35
-        versionCode 2
-        versionName '1.1'
+        versionCode scienceMdVersionCode
+        versionName scienceMdVersionName
+    }
+
+    signingConfigs {
+        release {
+            if (releaseKeystorePath) {
+                storeFile file(releaseKeystorePath)
+                storePassword System.getenv('SCIENCEMD_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('SCIENCEMD_KEY_ALIAS')
+                keyPassword System.getenv('SCIENCEMD_KEY_PASSWORD')
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            if (releaseKeystorePath) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
