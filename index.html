@@ -3560,11 +3560,14 @@
 
     <div class="help-panel">
       <section class="about-card">
-        <div class="about-icon">S</div>
+        <div class="about-icon" aria-hidden="true">Σ</div>
         <div>
           <h2>ScienceMD</h2>
-          <p>Offline Markdown, maths, and science-paper editor.</p>
-          <p class="creator">Created by Trevor Neil Kelleher.</p>
+          <p><strong>Version 1.2.1</strong></p>
+          <p>An offline-first Markdown and LaTeX editor for scientific and technical writing.</p>
+          <p>The standalone browser edition and Android app keep document editing on your device. No account or server is required.</p>
+          <p class="creator">Designed and created by Trevor Neil Kelleher.</p>
+          <p><a href="https://github.com/Coolkama/ScienceMD" target="_blank" rel="noopener noreferrer">Project source and releases on GitHub</a></p>
         </div>
       </section>
 
@@ -3761,7 +3764,90 @@ F = G\frac{m_1m_2}{r^2}
     let activeTableCell = null;
     let savedTableSourceSelection = null;
 
-    const starterText = "# Welcome to ScienceMD\n\n**ScienceMD** is an offline Markdown and LaTeX writing editor for science notes, revision sheets, technical documents, and print-ready papers.\n\nIt keeps the Markdown as the master file while giving you two practical editing modes:\n\n- **Write** \u2014 visual editing for normal writing.\n- **MD** \u2014 direct Markdown source editing when you need exact control.\n\nThe full-width visual editor shows the formatted document directly. A hidden renderer is used only when printing or exporting, so it does not take up workspace. On phone or tablet, the same file still works as a compact mobile editor.\n\n---\n\n## 1. Start writing\n\nUse headings to structure your document:\n\n```markdown\n# Main title\n## Section heading\n### Subsection\n```\n\nThe section navigation button builds a document outline from your headings, which is useful for long papers or revision notes.\n\n---\n\n## 2. Maths support\n\nScienceMD supports LaTeX-style maths.\n\nInline maths uses `\\( ... \\)`:\n\n\\(E = mc^2\\)\n\nDisplay maths uses `\\[ ... \\]`:\n\n\\[\nF = G\\frac{m_1m_2}{r^2}\n\\]\n\nAnother example:\n\n\\[\nv = f\\lambda, \\qquad E_k = \\frac{1}{2}mv^2\n\\]\n\nIn the visual editor, rendered maths can be clicked and edited directly. Click **Done** to return the formula to rendered form.\n\n---\n\n## 3. Formatting toolbar\n\nThe editor toolbar gives quick access to:\n\n| Tool | Use |\n|---|---|\n| H1, H2, H3 | headings |\n| Bold / Italic | emphasis |\n| Quote | block quotations |\n| Bullet / numbered list | lists |\n| Inline maths / block maths | LaTeX formulae |\n| Image | embedded images |\n| Table | insert a table visually |\n| MD | switch between visual and Markdown source editing |\n| Horizontal rule | section breaks |\n\n---\n\n## 4. Document and print styles\n\nUse the Style selector in the Output group to change how the visual document and printed output look.\n\nUseful styles include:\n\n- **Science Paper** \u2014 formal serif layout for science documents.\n- **Default** \u2014 general reading and editing.\n- **Times** \u2014 classic Times New Roman appearance.\n- **Clean Draft** \u2014 spacious draft reading mode.\n\nThe chosen style affects the visual editor and print/PDF output. It does not alter the Markdown file.\n\n---\n\n## 5. Tables\n\nUse the **Table** toolbar button to choose the number of columns and data rows. Click directly in any cell to type. When a cell is active, table controls appear for adding or removing rows and columns. The document is still saved as a standard Markdown table.\n\n| Quantity | Meaning | Relationship |\n|---|---|---|\n| \\(v\\) | wave speed | \\(v = f\\lambda\\) |\n| \\(f\\) | frequency | measured in hertz |\n| \\(\\lambda\\) | wavelength | measured in metres |\n\n---\n\n## 6. Code blocks\n\nUse triple backticks for code:\n\n```csharp\npublic static double KineticEnergy(double mass, double velocity)\n{\n    return 0.5 * mass * velocity * velocity;\n}\n```\n\n---\n\n## 7. Saving and exporting\n\n- **New** starts a fresh ScienceMD starter document.\n- **Open** loads an existing `.md` file.\n- **Save** downloads the current Markdown file.\n- **Save As** lets you choose a filename or export a self-contained rendered HTML copy.\n- **Print** in the Output group opens the browser print dialog, where you can print or save as PDF.\n\nAutosave uses browser storage as a safety net, but it is not a replacement for saving a real file.\n\n---\n\n## 8. Example paragraph\n\nThis is a normal paragraph for testing the visual editor, Markdown source, and print-ready document styles.\n";
+    const starterText = "# Welcome to ScienceMD
+
+**ScienceMD** is an offline-first Markdown and LaTeX editor for scientific notes, technical documents, revision material, and print-ready papers.
+
+Use **Write** for visual editing or **MD** when you want direct control of the Markdown source. Your document remains a normal `.md` file.
+
+> Delete this starter guide when you are ready and begin writing.
+
+---
+
+## Quick start
+
+- **New** creates a fresh starter document.
+- **Open** loads an existing Markdown file.
+- **Save** downloads the current `.md` file.
+- **Save As** saves under a new name or exports rendered HTML.
+- **Undo** and **Redo** reverse or restore editing changes.
+- **Print** prints the selected document style or saves it as PDF.
+
+Autosave is a safety net stored on this device. Use **Save** regularly to create a real file.
+
+---
+
+## Headings and formatting
+
+Use headings to organise longer documents:
+
+```markdown
+# Document title
+## Main section
+### Subsection
+```
+
+The edit toolbar also provides bold, italic, quotations, lists, horizontal rules, images, tables, inline maths, and block maths.
+
+---
+
+## Maths
+
+Inline maths uses `\( ... \)`:
+
+\(E = mc^2\)
+
+Display maths uses `\[ ... \]`:
+
+\[
+F = G\frac{m_1m_2}{r^2}
+\]
+
+In **Write** mode, select a rendered formula to edit its LaTeX source, then choose **Done** to render it again.
+
+---
+
+## Tables
+
+Use the **Table** button to insert and edit a Markdown table visually.
+
+| Quantity | Meaning | Relationship |
+|---|---|---|
+| \(v\) | wave speed | \(v = f\lambda\) |
+| \(f\) | frequency | measured in hertz |
+| \(\lambda\) | wavelength | measured in metres |
+
+---
+
+## Code
+
+Triple backticks create a code block:
+
+```csharp
+public static double KineticEnergy(double mass, double velocity)
+{
+    return 0.5 * mass * velocity * velocity;
+}
+```
+
+---
+
+## Output styles
+
+Choose a style from the **Output** group to change the visual document and its printed or PDF appearance. The selected style does not change the Markdown source.
+
+ScienceMD works as a standalone HTML file, through GitHub Pages, and as an Android app.
+";
 
     function showToast(message) {
       clearTimeout(toastTimer);
