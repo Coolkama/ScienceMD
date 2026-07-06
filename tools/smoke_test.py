@@ -78,7 +78,8 @@ require("android.intent.action.VIEW" in manifest, "Markdown ACTION_VIEW associat
 require("android.intent.action.EDIT" in manifest, "Markdown ACTION_EDIT association is missing")
 require("text/markdown" in manifest, "Markdown MIME association is missing")
 require("text/x-markdown" in manifest, "Legacy Markdown MIME association is missing")
-require("android:pathPattern=\".*\\.md\"" in manifest, ".md extension association is missing")
+require("application/markdown" in manifest, "Application Markdown MIME association is missing")
+require("text/plain" in manifest, "Text MIME fallback association is missing")
 require("android:launchMode=\"singleTop\"" in manifest, "singleTop launch mode is missing")
 
 require("text/markdown" in activity, "Android Markdown file picker support is missing")
