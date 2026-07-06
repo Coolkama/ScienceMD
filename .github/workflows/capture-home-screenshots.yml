@@ -1,0 +1,111 @@
+name: Capture homepage screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - index.html
+      - .github/workflows/capture-home-screenshots.yml
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Capture actual ScienceMD screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p home/assets
+
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          if [[ -z "$chrome" ]]; then
+            echo "::error::No Chrome or Chromium browser is available on the runner"
+            exit 1
+          fi
+
+          app_url="file://$GITHUB_WORKSPACE/index.html"
+
+          "$chrome" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --hide-scrollbars \
+            --no-first-run \
+            --no-default-browser-check \
+            --user-data-dir="$RUNNER_TEMP/sciencemd-desktop-profile" \
+            --window-size=1600,1000 \
+            --force-device-scale-factor=1 \
+            --virtual-time-budget=10000 \
+            --screenshot="$GITHUB_WORKSPACE/home/assets/sciencemd-desktop.png" \
+            "$app_url"
+
+          "$chrome" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --hide-scrollbars \
+            --no-first-run \
+            --no-default-browser-check \
+            --user-data-dir="$RUNNER_TEMP/sciencemd-mobile-profile" \
+            --window-size=709,1536 \
+            --force-device-scale-factor=1 \
+            --virtual-time-budget=10000 \
+            --screenshot="$GITHUB_WORKSPACE/home/assets/sciencemd-mobile.png" \
+            "$app_url"
+
+          test -s home/assets/sciencemd-desktop.png
+          test -s home/assets/sciencemd-mobile.png
+
+      - name: Use the actual screenshots on the homepage
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('home/index.html')
+          text = path.read_text(encoding='utf-8')
+
+          css = '''
+          .real-visual{position:relative;min-height:455px}
+          .desktop-shot{position:absolute;left:0;right:58px;top:26px;margin:0;padding:8px;border:2px solid rgba(255,255,255,.65);border-radius:18px;background:#10161d;box-shadow:0 28px 65px rgba(0,0,0,.36);overflow:hidden}
+          .desktop-shot:after{content:"";position:absolute;left:42%;right:42%;bottom:2px;height:3px;border-radius:3px;background:rgba(255,255,255,.28)}
+          .desktop-shot img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:10px;background:#fff}
+          .mobile-shot{position:absolute;z-index:3;right:0;bottom:0;width:150px;height:318px;margin:0;padding:8px;border:2px solid #c7d0d9;border-radius:28px;background:#10151b;box-shadow:0 22px 45px rgba(0,0,0,.38);overflow:hidden}
+          .mobile-shot:before{content:"";position:absolute;left:50%;top:5px;z-index:4;width:52px;height:8px;transform:translateX(-50%);border-radius:0 0 8px 8px;background:#10151b}
+          .mobile-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:19px;background:#fff}
+          @media(max-width:700px){.real-visual{min-height:305px}.desktop-shot{right:22px;transform:scale(.88);transform-origin:left top;width:109%}.mobile-shot{width:104px;height:222px;right:-1px;border-radius:21px;padding:6px}.mobile-shot img{border-radius:14px}}
+          '''
+
+          if '.real-visual{' not in text:
+              text = text.replace('</style>', css + '</style>', 1)
+
+          replacement = '''<div class="real-visual" aria-label="Actual ScienceMD screenshots on desktop and mobile">
+          <figure class="desktop-shot"><img src="assets/sciencemd-desktop.png" alt="Actual ScienceMD desktop editor showing scientific Markdown, equations and a rendered document"></figure>
+          <figure class="mobile-shot"><img src="assets/sciencemd-mobile.png" alt="Actual ScienceMD mobile editor showing equations and a scientific table"></figure>
+          </div>'''
+
+          if 'class="real-visual"' not in text:
+              start = text.index('<div class="visual"')
+              closing = '</div></div></div></header>'
+              end = text.index(closing, start)
+              text = text[:start] + replacement + text[end + len('</div>'):]
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit refreshed screenshots
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home/index.html home/assets/sciencemd-desktop.png home/assets/sciencemd-mobile.png
+          git commit -m "Use actual ScienceMD screenshots on homepage" || exit 0
+          git push
