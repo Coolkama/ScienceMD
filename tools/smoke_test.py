@@ -105,4 +105,13 @@ require("SCIENCEMD_KEYSTORE_PATH" in gradle, "release signing configuration is m
 require("?: '8'" in gradle and "?: '1.3.2'" in gradle, "Android 1.3.2 version defaults are missing")
 require(icon_source.is_file() and icon_source.stat().st_size > 1_000, "launcher icon source is missing")
 
+
+require((ROOT / "LICENSE").is_file(), "Apache 2.0 LICENSE file is missing")
+require((ROOT / "NOTICE").is_file(), "NOTICE file is missing")
+require((ROOT / "THIRD_PARTY_NOTICES.md").is_file(), "third-party notices are missing")
+require((ROOT / "WICKED_GOOD_XPATH_LICENSE.txt").is_file(), "Wicked Good XPath licence is missing")
+require("Licence and acknowledgements" in html, "in-app licence acknowledgements are missing")
+require("Apache License 2.0 OR Mozilla Public License 2.0" in html, "DOMPurify licence choice is recorded incorrectly")
+require("MathJax 3.2.1 | Apache License 2.0" in html, "MathJax licence banner is missing")
+
 print("ScienceMD smoke checks passed.")
