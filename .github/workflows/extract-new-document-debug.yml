@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - .github/workflows/extract-new-document-debug.yml
+      - tools/fix_new_document_reset.py
 
 permissions:
   contents: write
