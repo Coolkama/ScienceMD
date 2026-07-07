@@ -52,10 +52,11 @@ CKMark embeds third-party software. Their licences, copyright notices and the li
 ## Repository structure
 
 ```text
-index.html                              Complete standalone application
+index.html                              Complete standalone application and embedded browser icon
 home/index.html                         Product homepage and download options
-assets/CKMark-icon.png               Browser/project icon
+home/assets/                            Homepage desktop and mobile screenshots
 android/                                Native Android wrapper
+android/icon/                           Android launcher icon source
 android/RELEASING.md                    Signing and release instructions
 LICENSE                                 Apache License 2.0 for CKMark
 NOTICE                                  CKMark and third-party attributions
