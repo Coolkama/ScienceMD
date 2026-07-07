@@ -1,1 +1,0 @@
-LaTeX export tests passed.
