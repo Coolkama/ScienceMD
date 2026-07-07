@@ -1,0 +1,58 @@
+name: Fix Android packaging
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/fix-android-packaging.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore generated Android assets and resources
+        run: |
+          printf '%s' 'cGx1Z2lucyB7CiAgICBpZCAnY29tLmFuZHJvaWQuYXBwbGljYXRpb24nCn0KCmRlZiBzY2llbmNlTWRWZXJzaW9uQ29kZSA9IChwcm9qZWN0LmZpbmRQcm9wZXJ0eSgnU0NJRU5DRU1EX1ZFUlNJT05fQ09ERScpID86ICcxMCcpLnRvSW50ZWdlcigpCmRlZiBzY2llbmNlTWRWZXJzaW9uTmFtZSA9IHByb2plY3QuZmluZFByb3BlcnR5KCdTQ0lFTkNFTURfVkVSU0lPTl9OQU1FJykgPzogJzEuMy40JwpkZWYgcmVsZWFzZUtleXN0b3JlUGF0aCA9IFN5c3RlbS5nZXRlbnYoJ1NDSUVOQ0VNRF9LRVlTVE9SRV9QQVRIJykKCmFuZHJvaWQgewogICAgbmFtZXNwYWNlICd1ay5jby5jb29sa2FtYS5zY2llbmNlbWQnCiAgICBjb21waWxlU2RrIDM1CgogICAgZGVmYXVsdENvbmZpZyB7CiAgICAgICAgYXBwbGljYXRpb25JZCAndWsuY28uY29vbGthbWEuc2NpZW5jZW1kJwogICAgICAgIG1pblNkayAyNAogICAgICAgIHRhcmdldFNkayAzNQogICAgICAgIHZlcnNpb25Db2RlIHNjaWVuY2VNZFZlcnNpb25Db2RlCiAgICAgICAgdmVyc2lvbk5hbWUgc2NpZW5jZU1kVmVyc2lvbk5hbWUKICAgIH0KCiAgICBzaWduaW5nQ29uZmlncyB7CiAgICAgICAgcmVsZWFzZSB7CiAgICAgICAgICAgIGlmIChyZWxlYXNlS2V5c3RvcmVQYXRoKSB7CiAgICAgICAgICAgICAgICBzdG9yZUZpbGUgZmlsZShyZWxlYXNlS2V5c3RvcmVQYXRoKQogICAgICAgICAgICAgICAgc3RvcmVQYXNzd29yZCBTeXN0ZW0uZ2V0ZW52KCdTQ0lFTkNFTURfS0VZU1RPUkVfUEFTU1dPUkQnKQogICAgICAgICAgICAgICAga2V5QWxpYXMgU3lzdGVtLmdldGVudignU0NJRU5DRU1EX0tFWV9BTElBUycpCiAgICAgICAgICAgICAgICBrZXlQYXNzd29yZCBTeXN0ZW0uZ2V0ZW52KCdTQ0lFTkNFTURfS0VZX1BBU1NXT1JEJykKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICBidWlsZFR5cGVzIHsKICAgICAgICByZWxlYXNlIHsKICAgICAgICAgICAgbWluaWZ5RW5hYmxlZCBmYWxzZQogICAgICAgICAgICBzaWduaW5nQ29uZmlnIHJlbGVhc2VLZXlzdG9yZVBhdGggPyBzaWduaW5nQ29uZmlncy5yZWxlYXNlIDogbnVsbAogICAgICAgICAgICBwcm9ndWFyZEZpbGVzIGdldERlZmF1bHRQcm9ndWFyZEZpbGUoJ3Byb2d1YXJkLWFuZHJvaWQtb3B0aW1pemUudHh0JyksICdwcm9ndWFyZC1ydWxlcy5wcm8nCiAgICAgICAgfQogICAgfQoKICAgIGNvbXBpbGVPcHRpb25zIHsKICAgICAgICBzb3VyY2VDb21wYXRpYmlsaXR5IEphdmFWZXJzaW9uLlZFUlNJT05fMTcKICAgICAgICB0YXJnZXRDb21wYXRpYmlsaXR5IEphdmFWZXJzaW9uLlZFUlNJT05fMTcKICAgIH0KCiAgICBkZWYgZ2VuZXJhdGVkQXNzZXRzRGlyID0gZmlsZSgiJGJ1aWxkRGlyL2dlbmVyYXRlZC9zY2llbmNlbWRBc3NldHMiKQogICAgZGVmIGdlbmVyYXRlZFJlc0RpciA9IGZpbGUoIiRidWlsZERpci9nZW5lcmF0ZWQvc2NpZW5jZW1kUmVzb3VyY2VzIikKCiAgICBzb3VyY2VTZXRzIHsKICAgICAgICBtYWluIHsKICAgICAgICAgICAgYXNzZXRzLnNyY0RpcnMgKz0gZ2VuZXJhdGVkQXNzZXRzRGlyCiAgICAgICAgICAgIHJlcy5zcmNEaXJzICs9IGdlbmVyYXRlZFJlc0RpcgogICAgICAgIH0KICAgIH0KCiAgICB0YXNrcy5yZWdpc3RlcignY29weVNjaWVuY2VNZFdlYkFwcCcsIENvcHkpIHsKICAgICAgICBmcm9tKHJvb3RQcm9qZWN0LmZpbGUoJy4uL2luZGV4Lmh0bWwnKSkKICAgICAgICBpbnRvKGdlbmVyYXRlZEFzc2V0c0RpcikKICAgICAgICByZW5hbWUgeyAnaW5kZXguaHRtbCcgfQogICAgfQoKICAgIHRhc2tzLnJlZ2lzdGVyKCdjb3B5U2NpZW5jZU1kSWNvbicsIENvcHkpIHsKICAgICAgICBmcm9tKHJvb3RQcm9qZWN0LmZpbGUoJy4uL2Fzc2V0cy9TY2llbmNlTUQtaWNvbi5wbmcnKSkKICAgICAgICBpbnRvKG5ldyBGaWxlKGdlbmVyYXRlZFJlc0RpciwgJ2RyYXdhYmxlJykpCiAgICAgICAgcmVuYW1lIHsgJ3NjaWVuY2VtZF9sYXVuY2hlcl9pY29uLnBuZycgfQogICAgfQoKICAgIHRhc2tzLm5hbWVkKCdwcmVCdWlsZCcpLmNvbmZpZ3VyZSB7CiAgICAgICAgZGVwZW5kc09uKCdjb3B5U2NpZW5jZU1kV2ViQXBwJywgJ2NvcHlTY2llbmNlTWRJY29uJykKICAgIH0KfQo=' | base64 --decode > android/app/build.gradle
+
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('.github/workflows/release-android-apk.yml')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace("for example 1.3.3", "for example 1.3.4")
+          s = s.replace("default: '1.3.3'", "default: '1.3.4'")
+          s = s.replace("default: '9'", "default: '10'")
+          s = s.replace("version_name must look like 1.3.3", "version_name must look like 1.3.4")
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Verify Android packaging
+        run: |
+          python3 tools/smoke_test.py
+          cd android
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:lintDebug :app:assembleDebug
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          test -s app/build/generated/sciencemdAssets/index.html
+          test -s app/build/generated/sciencemdResources/drawable/sciencemd_launcher_icon.png
+
+      - name: Commit packaging repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android/app/build.gradle .github/workflows/release-android-apk.yml
+          git commit -m "Fix Android packaging for ScienceMD 1.3.4" || exit 0
+          git push
