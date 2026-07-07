@@ -17,6 +17,8 @@ keytool -genkeypair -v `
   -validity 10000
 ```
 
+The legacy `sciencemd` keystore and alias names are intentionally retained. They are internal compatibility identifiers and do not affect the CKMark app name.
+
 Convert it to a single Base64 value:
 
 ```powershell
@@ -39,19 +41,25 @@ Never commit the `.jks` file, its Base64 form or its passwords to the repository
 ## Publishing a release
 
 1. Open **Actions → Release Android APK → Run workflow**.
-2. Enter a semantic version such as `1.2.0`.
-3. Enter a version code larger than every previous release, such as `3`.
+2. Enter a semantic version such as `1.4.0`.
+3. Enter a version code larger than every previous release, such as `11`.
 4. Choose whether the release is a pre-release.
 5. Run the workflow.
 
-The workflow performs the repository smoke checks, Android release lint, a signed release build, APK signature verification and SHA-256 generation. It then publishes a GitHub Release containing:
+The workflow performs the repository smoke checks, Android release lint, a signed release build, APK signature verification and SHA-256 generation. It publishes a GitHub Release containing:
 
 - `CKMark-v<version>.apk`
-- `CKMark-v<version>.apk.sha256`
+- `CKMark.apk`
+- `CKMark-v<version>.html`
+- `CKMark.html`
+- `CKMark-v<version>-SHA256SUMS.txt`
+- the project licence and third-party notice files
 
 ## Debug and release installations
 
 Debug builds use the package suffix `.debug`, so they can coexist with the signed release app. Older test APKs created before this separation used the release package name with Android's debug signing key. Such an older APK must be uninstalled once before installing the first properly signed release.
+
+The release application ID remains `uk.co.coolkama.sciencemd`. Keeping it unchanged allows CKMark to update existing signed ScienceMD installations instead of appearing as a separate Android app.
 
 ## Versioning
 
@@ -60,4 +68,4 @@ The defaults live in `android/app/build.gradle`. The release workflow overrides 
 - `SCIENCEMD_VERSION_NAME`
 - `SCIENCEMD_VERSION_CODE`
 
-Always increase the version code. Release names should use the `major.minor.patch` form.
+These legacy internal variable names are retained for compatibility. Always increase the version code. Release names should use the `major.minor.patch` form.
