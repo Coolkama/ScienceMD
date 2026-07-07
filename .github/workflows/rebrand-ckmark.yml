@@ -1,0 +1,42 @@
+name: Apply CKMark rebrand
+
+on:
+  push:
+    branches:
+      - rebrand-ckmark
+    paths:
+      - tools/rebrand_ckmark.py
+      - .github/workflows/rebrand-ckmark.yml
+
+permissions:
+  contents: write
+
+jobs:
+  rebrand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out rebrand branch
+        uses: actions/checkout@v4
+        with:
+          ref: rebrand-ckmark
+          fetch-depth: 0
+
+      - name: Apply controlled rebrand
+        run: python3 tools/rebrand_ckmark.py
+
+      - name: Run smoke checks
+        run: python3 tools/smoke_test.py
+
+      - name: Commit rebrand
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No rebrand changes were required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Apply CKMark rebrand"
+          git push origin HEAD:rebrand-ckmark
