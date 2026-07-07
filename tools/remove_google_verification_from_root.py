@@ -7,7 +7,7 @@ root = Path(__file__).resolve().parents[1]
 page = root / "index.html"
 tag = '<meta name="google-site-verification" content="8T_Lhlq8hZqCxSO8JbrTHXz-VCUu44IGhsJOVtdTp9o">'
 
-html = page.read_text(encoding="utf-8")n
+html = page.read_text(encoding="utf-8")
 count = html.count(tag)
 if count == 0:
     print("Verification tag is already absent from the root app.")
