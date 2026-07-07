@@ -1,4 +1,4 @@
-name: Apply CKMark rebrand
+name: Run CKMark rebrand (use this)
 
 on:
   workflow_dispatch:
