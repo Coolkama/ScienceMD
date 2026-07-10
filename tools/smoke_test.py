@@ -97,6 +97,22 @@ require(
     "toggleFullscreen function boundary is missing",
 )
 require(
+    "function showToast(message)" in html,
+    "showToast helper is missing and startup notifications will fail",
+)
+require(
+    "function isFullscreenActive()" in html,
+    "isFullscreenActive helper is missing",
+)
+require(
+    "function updateFullscreenButton()" in html,
+    "updateFullscreenButton helper is missing and startup will stop before autosave restore",
+)
+require(
+    "const restoredDraft = safeGetStorage(STORAGE_KEY, starterText) || starterText;" in html,
+    "autosaved document restoration is missing",
+)
+require(
     ";\n      const target = document.documentElement;" not in html,
     "fullscreen code has escaped from its function body",
 )
