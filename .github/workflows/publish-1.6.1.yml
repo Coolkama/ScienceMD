@@ -18,27 +18,18 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Update defaults and remove temporary workflow
+      - name: Update smoke-test version defaults
         run: |
           python3 - <<'PY'
           from pathlib import Path
-
           smoke = Path('tools/smoke_test.py')
           text = smoke.read_text(encoding='utf-8')
           text = text.replace("require(\"?: '15'\" in gradle and \"?: '1.6.0'\" in gradle, \"Android 1.6.0 version defaults are missing\")", "require(\"?: '16'\" in gradle and \"?: '1.6.1'\" in gradle, \"Android 1.6.1 version defaults are missing\")")
           smoke.write_text(text, encoding='utf-8')
-
-          release = Path('.github/workflows/release-android-apk.yml')
-          text = release.read_text(encoding='utf-8')
-          text = text.replace("description: 'Release version, for example 1.6.0'", "description: 'Release version, for example 1.6.1'")
-          text = text.replace("default: '1.6.0'", "default: '1.6.1'")
-          text = text.replace("default: '15'", "default: '16'")
-          text = text.replace('version_name must look like 1.6.0', 'version_name must look like 1.6.1')
-          release.write_text(text, encoding='utf-8')
           PY
-          git rm .github/workflows/publish-1.6.1.yml
+          python3 tools/smoke_test.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add tools/smoke_test.py .github/workflows/release-android-apk.yml
-          git commit -m 'Finalise Sciwrix 1.6.1 release configuration'
+          git add tools/smoke_test.py
+          git commit -m 'Update smoke checks for Sciwrix 1.6.1'
           git push origin main
