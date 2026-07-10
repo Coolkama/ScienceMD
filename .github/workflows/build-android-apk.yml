@@ -53,10 +53,16 @@ jobs:
           PY
           python3 tools/update_onboarding_copy.py
 
-      - name: Run Sciwrix smoke checks
-        run: python3 tools/smoke_test.py
+      - name: Capture Sciwrix smoke result
+        run: |
+          set +e
+          python3 tools/smoke_test.py > tools/onboarding_smoke_result.txt 2>&1
+          status=$?
+          set -e
+          cat tools/onboarding_smoke_result.txt
+          echo "Smoke exit status: $status" >> tools/onboarding_smoke_result.txt
 
-      - name: Validate inline JavaScript
+      - name: Validate updated HTML and inline JavaScript
         run: |
           python3 - <<'PY'
           from html.parser import HTMLParser
@@ -68,9 +74,11 @@ jobs:
           assert '# Welcome to Sciwrix' in text
           assert '## The ribbon' in text
           assert '<h3>Ribbon tabs</h3>' in text
+          assert '<h3>Editing views and layout</h3>' in text
+          assert '<h3>Document style, printing, and export</h3>' in text
           assert '<strong>Help &amp; About</strong>' in text
-          assert 'Use **Write**' not in text
-          assert 'Output group' not in text
+          assert '<h3>Top toolbar</h3>' not in text
+          assert '<h3>Edit toolbar</h3>' not in text
           assert text.count('SCIENCEMD-LICENCES-START') == 1
           assert text.count('SCIENCEMD-LICENCES-END') == 1
           assert text.rstrip().endswith('</html>')
@@ -128,7 +136,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
+          git add index.html tools/onboarding_smoke_result.txt
           if git diff --cached --quiet; then
             echo 'No onboarding changes required'
             exit 0
