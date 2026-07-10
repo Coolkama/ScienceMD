@@ -4,7 +4,11 @@
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +24,36 @@ def fail(message: str) -> None:
 def require(condition: bool, message: str) -> None:
     if not condition:
         fail(message)
+
+
+class InlineScripts(HTMLParser):
+    """Collect executable inline JavaScript without interpreting HTML entities."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=False)
+        self.capture = False
+        self.current: list[str] = []
+        self.scripts: list[tuple[str, str]] = []
+        self.attributes: dict[str, str | None] = {}
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() != "script":
+            return
+        self.attributes = dict(attrs)
+        self.capture = "src" not in self.attributes
+        self.current = []
+
+    def handle_data(self, data: str) -> None:
+        if self.capture:
+            self.current.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() != "script" or not self.capture:
+            return
+        script_type = (self.attributes.get("type") or "").lower()
+        if script_type in ("", "text/javascript", "application/javascript", "module"):
+            self.scripts.append((script_type, "".join(self.current)))
+        self.capture = False
 
 
 require(HTML.is_file(), "index.html is missing")
@@ -58,6 +92,79 @@ require(
     starter_assignment is not None,
     "starterText must be a valid single-line JavaScript string with escaped newlines",
 )
+require(
+    "async function toggleFullscreen()" in html,
+    "toggleFullscreen function boundary is missing",
+)
+require(
+    "function showToast(message)" in html,
+    "showToast helper is missing and startup notifications will fail",
+)
+require(
+    "function isFullscreenActive()" in html,
+    "isFullscreenActive helper is missing",
+)
+require(
+    "function updateFullscreenButton()" in html,
+    "updateFullscreenButton helper is missing and startup will stop before autosave restore",
+)
+require(
+    "const restoredDraft = safeGetStorage(STORAGE_KEY, starterText) || starterText;" in html,
+    "autosaved document restoration is missing",
+)
+require(
+    ";\n      const target = document.documentElement;" not in html,
+    "fullscreen code has escaped from its function body",
+)
+require(
+    '<option value="normal">Normal</option>' in html,
+    "Normal block style is missing from the Markdown ribbon",
+)
+require(
+    '<option value="" selected>Style</option><option value="normal">Normal</option>' in html,
+    "Normal block style cannot be selected repeatedly",
+)
+require(
+    "event.target.value = 'normal';" not in html,
+    "Block-style selector still prevents choosing Normal",
+)
+require(
+    "window.execWysiwyg('formatBlock', tag)" in html,
+    "Normal visual formatting does not preserve the editor selection",
+)
+require(
+    'setInterval(resizeSourceEditor' not in html,
+    "Markdown source editor still has the scroll-resetting resize timer",
+)
+require(
+    'height: calc(100dvh - 175px) !important;' in html
+    and 'overflow: auto !important;' in html,
+    "Markdown source editor does not have a stable scrollable viewport",
+)
+
+node = shutil.which("node")
+if node:
+    parser = InlineScripts()
+    parser.feed(html)
+    with tempfile.TemporaryDirectory() as temporary_directory:
+        for index, (script_type, source) in enumerate(parser.scripts):
+            if not source.strip():
+                continue
+            suffix = ".mjs" if script_type == "module" else ".js"
+            script_path = Path(temporary_directory) / f"inline-script-{index}{suffix}"
+            script_path.write_text(source, encoding="utf-8")
+            result = subprocess.run(
+                [node, "--check", str(script_path)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            require(
+                result.returncode == 0,
+                f"Inline JavaScript block {index} has a syntax error:\n{result.stderr.strip()}",
+            )
+else:
+    print("WARNING: Node.js was not found; inline JavaScript syntax checking was skipped.")
 
 require('<section class="about-card">' in html, "About panel is missing")
 require("Project source and releases on GitHub" in html, "Updated About information is missing")
@@ -81,7 +188,7 @@ require("text/markdown" in manifest, "Markdown MIME association is missing")
 require("text/x-markdown" in manifest, "Legacy Markdown MIME association is missing")
 require("application/markdown" in manifest, "Application Markdown MIME association is missing")
 require("text/plain" in manifest, "Text MIME fallback association is missing")
-require("android:launchMode=\"singleTop\"" in manifest, "singleTop launch mode is missing")
+require('android:launchMode="singleTop"' in manifest, "singleTop launch mode is missing")
 
 require("text/markdown" in activity, "Android Markdown file picker support is missing")
 require("onNewIntent" in activity, "opening another Markdown file while running is unsupported")
@@ -107,7 +214,6 @@ require("SCIENCEMD_VERSION_CODE" in gradle, "release version override is missing
 require("SCIENCEMD_KEYSTORE_PATH" in gradle, "release signing configuration is missing")
 require("?: '13'" in gradle and "?: '1.5.0'" in gradle, "Android 1.5.0 version defaults are missing")
 require(icon_source.is_file() and icon_source.stat().st_size > 1_000, "launcher icon source is missing")
-
 
 require((ROOT / "LICENSE").is_file(), "Apache 2.0 LICENSE file is missing")
 require((ROOT / "NOTICE").is_file(), "NOTICE file is missing")
