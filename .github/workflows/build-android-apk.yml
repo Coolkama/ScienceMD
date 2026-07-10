@@ -10,6 +10,14 @@ on:
       - 'android/**'
       - 'tools/smoke_test.py'
       - '.github/workflows/build-android-apk.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'android/**'
+      - 'tools/smoke_test.py'
+      - '.github/workflows/build-android-apk.yml'
 
 permissions:
   contents: read
