@@ -14,6 +14,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, reopened, synchronize]
     paths:
       - 'index.html'
       - 'android/**'
@@ -82,40 +83,6 @@ jobs:
               raise SystemExit('Autosave restore code is missing')
 
           index_path.write_text(text, encoding='utf-8')
-
-          smoke_path = Path('tools/smoke_test.py')
-          smoke = smoke_path.read_text(encoding='utf-8')
-          anchor = '''require(
-              "async function toggleFullscreen()" in html,
-              "toggleFullscreen function boundary is missing",
-          )
-'''
-          addition = '''require(
-              "async function toggleFullscreen()" in html,
-              "toggleFullscreen function boundary is missing",
-          )
-          require(
-              "function showToast(message)" in html,
-              "showToast helper is missing and startup notifications will fail",
-          )
-          require(
-              "function isFullscreenActive()" in html,
-              "isFullscreenActive helper is missing",
-          )
-          require(
-              "function updateFullscreenButton()" in html,
-              "updateFullscreenButton helper is missing and startup will stop before autosave restore",
-          )
-          require(
-              "const restoredDraft = safeGetStorage(STORAGE_KEY, starterText) || starterText;" in html,
-              "autosaved document restoration is missing",
-          )
-'''
-          if addition not in smoke:
-              if smoke.count(anchor) != 1:
-                  raise SystemExit(f'Expected one fullscreen smoke-test anchor, found {smoke.count(anchor)}')
-              smoke = smoke.replace(anchor, addition, 1)
-          smoke_path.write_text(smoke, encoding='utf-8')
           PY
 
       - name: Set up Java 17
@@ -149,7 +116,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html tools/smoke_test.py
+          git add index.html
           if git diff --cached --quiet; then
             echo 'Runtime helpers already present.'
           else
