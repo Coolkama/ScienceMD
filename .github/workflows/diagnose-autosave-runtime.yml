@@ -1,0 +1,74 @@
+name: Diagnose autosave runtime
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/diagnose-autosave-runtime.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/revised-ribbon-ui
+          fetch-depth: 0
+
+      - name: Extract relevant runtime contexts
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          text = Path('index.html').read_text(encoding='utf-8')
+          terms = [
+              'updateFullscreenButton',
+              'isFullscreenActive',
+              'localStorage.setItem',
+              'localStorage.getItem',
+              'autosave',
+              'restore',
+              'loadDraft',
+              'saveDraft',
+              'previewFrame',
+              'iframe',
+              'srcdoc',
+              'contentWindow',
+              'DOMContentLoaded',
+              'starterText'
+          ]
+          out = []
+          for term in terms:
+              out.append(f'\n===== {term} =====\n')
+              start = 0
+              count = 0
+              while True:
+                  pos = text.find(term, start)
+                  if pos < 0:
+                      break
+                  count += 1
+                  lo = max(0, pos - 900)
+                  hi = min(len(text), pos + 1400)
+                  out.append(f'\n--- occurrence {count} at {pos} ---\n')
+                  out.append(text[lo:hi])
+                  start = pos + len(term)
+                  if count >= 12:
+                      out.append('\n[truncated after 12 occurrences]\n')
+                      break
+              if count == 0:
+                  out.append('[none]\n')
+
+          Path('_runtime_diagnostic.txt').write_text(''.join(out), encoding='utf-8')
+          PY
+
+      - name: Commit diagnostic
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add _runtime_diagnostic.txt
+          git commit -m 'Add temporary autosave runtime diagnostic'
+          git push origin HEAD:feature/revised-ribbon-ui
