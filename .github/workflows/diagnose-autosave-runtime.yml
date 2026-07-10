@@ -1,4 +1,4 @@
-name: Diagnose autosave runtime
+name: Repair autosave startup runtime
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  diagnose:
+  repair:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,39 +19,102 @@ jobs:
           ref: feature/revised-ribbon-ui
           fetch-depth: 0
 
-      - name: Extract frame-related contexts
+      - name: Restore startup helpers and autosave guard checks
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
-          text = Path('index.html').read_text(encoding='utf-8')
-          patterns = [
-              r'<iframe\b',
-              r'createElement\(["\']iframe["\']\)',
-              r'contentWindow',
-              r'contentDocument',
-              r'window\.frames',
-              r'\.src\s*=\s*[^;]+',
-              r'location\.(?:href|assign|replace)',
+          index_path = Path('index.html')
+          text = index_path.read_text(encoding='utf-8')
+
+          helper_markers = [
+              '    function showToast(message) {',
+              '    function isFullscreenActive() {',
+              '    function updateFullscreenButton() {',
           ]
-          out = []
-          for pattern in patterns:
-              out.append(f'\n===== {pattern} =====\n')
-              matches = list(re.finditer(pattern, text, flags=re.I))
-              out.append(f'count={len(matches)}\n')
-              for index, match in enumerate(matches[:30], 1):
-                  pos = match.start()
-                  lo = max(0, pos - 700)
-                  hi = min(len(text), pos + 1200)
-                  out.append(f'\n--- {index} at {pos} ---\n{text[lo:hi]}\n')
-          Path('_runtime_diagnostic.txt').write_text(''.join(out), encoding='utf-8')
+          present = [marker in text for marker in helper_markers]
+          if any(present) and not all(present):
+              raise SystemExit(f'Fullscreen helper set is incomplete: {present}')
+
+          if not all(present):
+              needle = '    async function toggleFullscreen() {'
+              if text.count(needle) != 1:
+                  raise SystemExit(f'Expected one toggleFullscreen function, found {text.count(needle)}')
+              helpers = '''    function showToast(message) {
+              clearTimeout(toastTimer);
+              toast.textContent = message;
+              toast.classList.add('show');
+              toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+            }
+
+            function isFullscreenActive() {
+              return !!(document.fullscreenElement || document.webkitFullscreenElement);
+            }
+
+            function updateFullscreenButton() {
+              if (!fullscreenBtn) return;
+              fullscreenBtn.textContent = isFullscreenActive() ? '×' : '⛶';
+              fullscreenBtn.setAttribute('aria-label', isFullscreenActive() ? 'Exit fullscreen' : 'Enter fullscreen');
+              fullscreenBtn.setAttribute('title', isFullscreenActive() ? 'Exit fullscreen' : 'Enter fullscreen');
+            }
+
+'''
+              text = text.replace(needle, helpers + needle, 1)
+
+          required_runtime = [
+              '    function showToast(message) {',
+              '    function isFullscreenActive() {',
+              '    function updateFullscreenButton() {',
+              'const restoredDraft = safeGetStorage(STORAGE_KEY, starterText) || starterText;',
+          ]
+          for marker in required_runtime:
+              if marker not in text:
+                  raise SystemExit(f'Missing runtime marker after repair: {marker}')
+
+          index_path.write_text(text, encoding='utf-8')
+
+          smoke_path = Path('tools/smoke_test.py')
+          smoke = smoke_path.read_text(encoding='utf-8')
+          anchor = '''require(
+              "async function toggleFullscreen()" in html,
+              "toggleFullscreen function boundary is missing",
+          )
+'''
+          addition = '''require(
+              "async function toggleFullscreen()" in html,
+              "toggleFullscreen function boundary is missing",
+          )
+          require(
+              "function showToast(message)" in html,
+              "showToast helper is missing and startup notifications will fail",
+          )
+          require(
+              "function isFullscreenActive()" in html,
+              "isFullscreenActive helper is missing",
+          )
+          require(
+              "function updateFullscreenButton()" in html,
+              "updateFullscreenButton helper is missing and startup will stop before autosave restore",
+          )
+          require(
+              "const restoredDraft = safeGetStorage(STORAGE_KEY, starterText) || starterText;" in html,
+              "autosaved document restoration is missing",
+          )
+'''
+          if addition not in smoke:
+              if smoke.count(anchor) != 1:
+                  raise SystemExit(f'Expected one fullscreen smoke-test anchor, found {smoke.count(anchor)}')
+              smoke = smoke.replace(anchor, addition, 1)
+          smoke_path.write_text(smoke, encoding='utf-8')
           PY
 
-      - name: Commit diagnostic
+      - name: Run repository smoke checks
+        run: python3 tools/smoke_test.py
+
+      - name: Commit repair
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add _runtime_diagnostic.txt
-          git commit -m 'Focus temporary diagnostic on frame access'
+          git add index.html tools/smoke_test.py
+          git commit -m 'Restore autosave startup and fullscreen helpers'
           git push origin HEAD:feature/revised-ribbon-ui
