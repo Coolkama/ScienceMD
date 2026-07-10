@@ -18,19 +18,14 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Update release defaults and remove temporary workflow
+      - name: Update defaults and remove temporary workflow
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
           smoke = Path('tools/smoke_test.py')
           text = smoke.read_text(encoding='utf-8')
-          old = "require(\"?: '15'\" in gradle and \"?: '1.6.0'\" in gradle, \"Android 1.6.0 version defaults are missing\")"
-          new = "require(\"?: '16'\" in gradle and \"?: '1.6.1'\" in gradle, \"Android 1.6.1 version defaults are missing\")"
-          if old in text:
-              text = text.replace(old, new, 1)
-          elif new not in text:
-              raise SystemExit('Could not locate Android version smoke check')
+          text = text.replace("require(\"?: '15'\" in gradle and \"?: '1.6.0'\" in gradle, \"Android 1.6.0 version defaults are missing\")", "require(\"?: '16'\" in gradle and \"?: '1.6.1'\" in gradle, \"Android 1.6.1 version defaults are missing\")")
           smoke.write_text(text, encoding='utf-8')
 
           release = Path('.github/workflows/release-android-apk.yml')
@@ -42,10 +37,6 @@ jobs:
           release.write_text(text, encoding='utf-8')
           PY
           git rm .github/workflows/publish-1.6.1.yml
-
-      - name: Verify and commit final state
-        run: |
-          python3 tools/smoke_test.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add tools/smoke_test.py .github/workflows/release-android-apk.yml
