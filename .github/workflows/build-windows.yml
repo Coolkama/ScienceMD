@@ -24,6 +24,9 @@ jobs:
         run: python tools/smoke_test.py
       - name: Publish portable executable
         run: dotnet publish windows/Sciwrix.Windows/Sciwrix.Windows.csproj -c Release -r win-x64 --self-contained true -o artifacts
+      - name: Remove build-only documentation files
+        shell: pwsh
+        run: Remove-Item artifacts/*.xml -ErrorAction SilentlyContinue
       - name: Verify portable package
         shell: pwsh
         run: |
