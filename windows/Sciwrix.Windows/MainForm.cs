@@ -102,7 +102,15 @@ internal sealed class MainForm : Form
         {
             var payload = JsonSerializer.Serialize(new { name = Path.GetFileName(path), mimeType = "text/markdown", data = Convert.ToBase64String(await File.ReadAllBytesAsync(path)) });
             var result = await webView.CoreWebView2.ExecuteScriptAsync($"window.__sciwrixWindows.openDocument({payload})");
-            if (!result.Contains("ok", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("The editor did not accept the document.");
+            if (!result.Contains("started", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("The editor did not start loading the document.");
+            string state = "loading";
+            for (var attempt = 0; attempt < 100 && state == "loading"; attempt++)
+            {
+                await Task.Delay(100);
+                var stateJson = await webView.CoreWebView2.ExecuteScriptAsync("window.__sciwrixWindows.getOpenState()");
+                state = JsonSerializer.Deserialize<string>(stateJson) ?? "error:no-status";
+            }
+            if (state != "ok") throw new InvalidOperationException(state.StartsWith("error:") ? state[6..] : "The editor timed out while loading the document.");
             currentDocumentPath = Path.GetFullPath(path); UpdateTitle();
         }
         catch (Exception ex) { MessageBox.Show(this, $"Sciwrix could not open this file.\n\n{ex.Message}", "Sciwrix"); }
