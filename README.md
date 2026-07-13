@@ -25,6 +25,7 @@ The product homepage explains the online, standalone HTML and Android versions a
 - Desktop and mobile layouts
 - Local `.md` file open/save support where the platform permits it
 - Native Android wrapper and APK build workflows
+- Portable native Windows executable built with C# and WebView2
 - Embedded Sciwrix icon
 
 ## Running Sciwrix in a browser
@@ -42,6 +43,10 @@ The Android project is stored in [`android`](./android). It packages the same se
 Every push affecting the application or Android wrapper runs smoke checks, Android lint and a debug APK build. Proper signed releases are produced manually through the **Release Android APK** GitHub Actions workflow after the repository signing secrets have been configured.
 
 See [`android/RELEASING.md`](./android/RELEASING.md) for the one-time signing setup and release procedure.
+
+## Windows app
+
+The project in [`windows`](./windows) packages the same offline editor as one portable `Sciwrix.exe`. It adds native Windows file dialogs, direct Markdown saving, printing, command-line opening and drag-and-drop. It is self-contained, so users do not need to install .NET; the standard Microsoft Edge WebView2 Runtime is the only system prerequisite.
 
 ## Licence
 
